@@ -7,7 +7,6 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import ImageUpload from "@/components/ui/image-upload"
 import { Input } from "@/components/ui/input"
 import { Separator } from "@/components/ui/separator"
-import { useOrigin } from "@/hooks/use-origin"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Billboard } from "@prisma/client"
 import axios from "axios"
@@ -36,7 +35,6 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
 
     const router = useRouter();
     const params = useParams();
-    const origin = useOrigin();
     
     const[open, setOpen] = useState(false);
     const[loading, setLoading] = useState(false);
@@ -78,7 +76,7 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
             setLoading(true)
             await axios.delete(`/api/${params.storeId}/billboards/${params.billboardId}`)
             router.refresh();
-            router.push('/');
+            router.push(`/${params.storeId}/billboards`);
             toast.success("Store deleted.");
 
         } catch(error) {
